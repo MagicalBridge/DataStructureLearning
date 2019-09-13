@@ -71,6 +71,7 @@ public class Array {
 
     /**
      * 在所有元素的前一个位置添加一个元素
+     *
      * @param e
      */
     public void addFirst(int e) {
@@ -104,6 +105,53 @@ public class Array {
         // 此时 想要插入的位置其实也是有元素的，只不过，这个时候 可以放心的覆盖这个部分了
         data[index] = e;
         size++;
+    }
+
+    /**
+     * 获取index 索引位置的元素
+     *
+     * @param index
+     * @return
+     */
+    int get(int index) {
+        // 同时也要保证用户访问是不会越界的
+        if (index < 0 || index >= size) {
+            throw new IllegalArgumentException("Get failed Index is illegal ");
+        }
+        return data[index];
+    }
+
+    /**
+     * 修改指定位置的元素为e
+     * @param index
+     * @param e
+     */
+    void set(int index, int e) {
+        if (index < 0 || index >= size) {
+            throw new IllegalArgumentException("Get failed Index is illegal ");
+        }
+        data[index] = e;
+    }
+
+    /**
+     * 重写父类的方法
+     */
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder();
+        res.append(String.format("Array: size = %d, capacity = %d\n", size, data.length));
+        res.append('[');
+
+        for (int i = 0; i < size; i++) {
+            res.append(data[i]);
+            if (i != size - 1) {
+                res.append(", ");
+            }
+        }
+
+        res.append(']');
+
+        return res.toString();
     }
 
 
