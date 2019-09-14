@@ -1,9 +1,9 @@
-public class Array {
+public class Array<E> {
 
     /**
      * 不希望用户在外部可见
      */
-    private int[] data;
+    private E[] data;
     private int size;
 
     /**
@@ -12,7 +12,7 @@ public class Array {
      * @param capacity
      */
     public Array(int capacity) {
-        data = new int[capacity];
+        data = (E[]) new Object[capacity];
         size = 0;
     }
 
@@ -55,7 +55,7 @@ public class Array {
      *
      * @param e
      */
-    public void addLast(int e) {
+    public void addLast(E e) {
         // size 从0 计数 data.length 从1 计数 如果两者相等 size越界了
 //        if (size == data.length) {
 //            throw new IllegalArgumentException("AddLast failed Array is full");
@@ -74,8 +74,81 @@ public class Array {
      *
      * @param e
      */
-    public void addFirst(int e) {
+    public void addFirst(E e) {
         add(0, e);
+    }
+
+    /**
+     * 在数组中是否存在某一个元素
+     */
+    public boolean contains(E e) {
+        for (int i = 0; i < size; i++) {
+            if (data[i].equals(e)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 查找数组中元素e 所在的索引 如果不存在元素e 则返回-1
+     */
+    public int find(E e) {
+        for (int i = 0; i < size; i++) {
+            if (data[i].equals(e)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 从数组中删除 index 位置的元素 返回删除的元素
+     */
+    public E remove(int index) {
+        if (index < 0 || index >= size) {
+            throw new IllegalArgumentException("Add failed, index is illegal");
+        }
+        E ret = data[index];
+
+        // 从想要删除的位置找到后一个位置
+        for (int i = index + 1; i < size; i++) {
+            data[i - 1] = data[i];
+        }
+        size--;
+        data[size] = null;
+
+        // 如果数组中的元素已经没有
+        if (size == data.length / 2) {
+            resize(data.length / 2);
+        }
+
+        return ret;
+    }
+
+    /**
+     * 从数组中删除第一个元素，返回删除的元素
+     */
+    public E removeFirst() {
+        return remove(0);
+    }
+
+    /**
+     * 从数组中删除最后一个元素 返回删除的元素
+     */
+    public E removeLast() {
+        return remove(size - 1);
+    }
+
+    /**
+     * 从数组中删除元素e
+     */
+    public void removeElement(E e) {
+        // 如果能够找到
+        int index = find(e);
+        if (index != -1) {
+            remove(index);
+        }
     }
 
     /**
@@ -84,16 +157,17 @@ public class Array {
      * @param index
      * @param e
      */
-    public void add(int index, int e) {
-        // size 从0 开始 data。length 从1 开始 两者相等的时候 数组满了
-        if (size == data.length) {
-            throw new IllegalArgumentException("Add failed, Array is full");
-        }
+    public void add(int index, E e) {
 
         // 还需要判断 index 索引的合法性 index 大于零很好理解 index > size 说明不是在第一个没有元素的位置添加了
         // 这样数组就是不连续的了
         if (index < 0 || index > size) {
             throw new IllegalArgumentException("Add failed, Require index>= 0 or index<=size full");
+        }
+
+        // size 从0 开始 data。length 从1 开始 两者相等的时候 数组满了
+        if (size == data.length) {
+            resize(2 * data.length);
         }
 
         // 从后面往前进行
@@ -113,7 +187,7 @@ public class Array {
      * @param index
      * @return
      */
-    int get(int index) {
+    E get(int index) {
         // 同时也要保证用户访问是不会越界的
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Get failed Index is illegal ");
@@ -123,10 +197,11 @@ public class Array {
 
     /**
      * 修改指定位置的元素为e
+     *
      * @param index
      * @param e
      */
-    void set(int index, int e) {
+    void set(int index, E e) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Get failed Index is illegal ");
         }
@@ -152,6 +227,14 @@ public class Array {
         res.append(']');
 
         return res.toString();
+    }
+
+    private void resize(int newCapacity) {
+        E[] newData = (E[]) new Object[newCapacity];
+        for (int i = 0; i < size; i++) {
+            newData[i] = data[i];
+        }
+        data = newData;
     }
 
 
