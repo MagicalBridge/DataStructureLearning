@@ -56,16 +56,6 @@ public class Array<E> {
      * @param e
      */
     public void addLast(E e) {
-        // size 从0 计数 data.length 从1 计数 如果两者相等 size越界了
-//        if (size == data.length) {
-//            throw new IllegalArgumentException("AddLast failed Array is full");
-//        }
-//        data[size] = e;
-//        size++;
-
-        // 因为这个添加最后一个元素的行为已经封装在了 add 方法中，因此 执行一下 add 方法传入 size 和相应的
-        // 的元素e 就可以了
-
         add(size, e);
     }
 
@@ -187,12 +177,28 @@ public class Array<E> {
      * @param index
      * @return
      */
-    E get(int index) {
+    public E get(int index) {
         // 同时也要保证用户访问是不会越界的
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Get failed Index is illegal ");
         }
         return data[index];
+    }
+
+    /**
+     * 获取最后一个元素
+     * @return
+     */
+    public E getLast(){
+        return  get(size-1);
+    }
+
+    /**
+     * 获取第一个元素
+     * @return
+     */
+    public E getFirst(){
+        return get(0);
     }
 
     /**
