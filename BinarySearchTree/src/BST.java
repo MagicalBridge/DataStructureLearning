@@ -5,12 +5,13 @@
 
 public class BST<E extends Comparable<E>> {
     /**
-     * 内部类
+     * 内部类 节点类
      */
     private class Node {
         // 1、内部类初始化两个成员变量
 
         public E e;
+        // 指向左孩子和右孩子
         public Node left, right;
 
         // 2、给这个内部类添加一个构造函数
@@ -22,7 +23,7 @@ public class BST<E extends Comparable<E>> {
         }
     }
 
-    // BST的成员变量 根节点
+    // BST的成员变量 根节点 和存储多少个元素变量
 
     private Node root;
     private int size;
@@ -54,12 +55,7 @@ public class BST<E extends Comparable<E>> {
      */
     public void add(E e) {
         // 如果我们的根节点本身就是空的 元素直接赋值在根节点上
-        if (root == null) {
-            root = new Node(e);
-            size++;
-        } else {
-            add(root, e);
-        }
+        root = add(root, e);
     }
 
     /**
@@ -80,6 +76,80 @@ public class BST<E extends Comparable<E>> {
         }
 
         return node;
+    }
+
+    /**
+     * 看二分搜索树是否包含元素e
+     */
+    public boolean contains(E e) {
+        return contains(root, e);
+    }
+
+    /**
+     * 看以node为根的二分搜索树中是否包含元素 e 递归算法
+     *
+     * @param node
+     * @param e
+     * @return
+     */
+    private boolean contains(Node node, E e) {
+        if (node == null) {
+            return false;
+        }
+        if (e.compareTo(node.e) == 0) {
+            return true;
+        } else if (e.compareTo(node.e) < 0) {
+            return contains(node.left, e);
+        } else {
+            return contains(node.right, e);
+        }
+    }
+
+    /**
+     * 二分搜索树的前序遍历
+     */
+    public void preOrder() {
+        preOrder(root);
+    }
+
+    /**
+     * 前序遍历以node为根的二分搜索树 ，递归算法
+     */
+    private void preOrder(Node node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.println(node.e);
+        preOrder(node.left);
+        preOrder(node.right);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder();
+        generateBSTString(root, 0, res);
+        return res.toString();
+    }
+
+    private void generateBSTString(Node node, int depth, StringBuilder res) {
+        if (node == null) {
+            res.append(generateDepthString(depth) + "null\n");
+            return;
+        }
+
+        res.append(generateDepthString(depth) + node.e + "\n");
+        generateBSTString(node.left, depth + 1, res);
+        generateBSTString(node.right, depth + 1, res);
+    }
+
+    private String generateDepthString(int depth) {
+        StringBuilder res = new StringBuilder();
+
+        for (int i = 0; i < depth; i++) {
+            res.append("--");
+        }
+        return res.toString();
     }
 
 }
