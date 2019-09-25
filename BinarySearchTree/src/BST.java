@@ -1,5 +1,5 @@
 /*
- * 二分搜索树并不是支持所有的数据，因此需要继承 比较这个接口 当然这个接口也是支持泛型
+ * 二分搜索树并不是支持所有的数据，因此需要继承Comparable这个接口 当然这个接口也是支持泛型
  *
  */
 
@@ -14,7 +14,7 @@ public class BST<E extends Comparable<E>> {
         // 指向左孩子和右孩子
         public Node left, right;
 
-        // 2、给这个内部类添加一个构造函数
+        // 2、给这个内部类添加一个Node这个内部类的构造函数
 
         public Node(E e) {
             this.e = e;
