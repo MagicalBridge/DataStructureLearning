@@ -6,15 +6,27 @@ public class LinkedList<E> {
         public E e;
         public Node next;
 
+        /**
+         * 全参构造函数: 这里面,this.e 指向的是构造函数成员变量的
+         * @param e
+         * @param next
+         */
         public Node(E e, Node next) {
             this.e = e;
             this.next = next;
         }
 
+        /**
+         * 用户只传递了 e 参数，没有传递 节点
+         * @param e
+         */
         public Node(E e) {
             this(e, null);
         }
 
+        /**
+         * 用户什么都没有传递 无参构造函数
+         */
         public Node() {
             this(null, null);
         }
