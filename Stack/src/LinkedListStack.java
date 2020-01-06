@@ -33,7 +33,7 @@ public class LinkedListStack<E> implements Stack<E> {
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
-        res.append("Stack top");
+        res.append("Stack：top");
         res.append(list);
         return res.toString();
     }

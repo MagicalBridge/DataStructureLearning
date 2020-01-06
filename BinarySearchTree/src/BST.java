@@ -30,6 +30,7 @@ public class BST<E extends Comparable<E>> {
 
     /**
      * BST 的构造函数
+     * 初始化的构造函数 根节点是 null size 是0
      */
     public BST() {
         root = null;

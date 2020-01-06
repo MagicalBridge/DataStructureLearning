@@ -49,6 +49,7 @@ public class LinkedList<E> {
      * 获取链表中的元素的个数
      */
     public int getSize() {
+
         return size;
     }
 
@@ -56,6 +57,7 @@ public class LinkedList<E> {
      * 返回链表是否为空
      */
     public boolean isEmpty() {
+
         return size == 0;
     }
 

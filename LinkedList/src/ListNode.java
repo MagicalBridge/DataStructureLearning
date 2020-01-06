@@ -1,5 +1,3 @@
-import jdk.nashorn.api.tree.ReturnTree;
-
 public class ListNode {
     int val;
     ListNode next;
@@ -23,6 +21,8 @@ public class ListNode {
             cur = cur.next;
         }
     }
+
+    // 以当前节点为头结点的链表的信息字符串
 
     @Override
     public String toString() {
