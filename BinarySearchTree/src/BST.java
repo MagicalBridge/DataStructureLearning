@@ -3,6 +3,10 @@
  *
  */
 
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
 public class BST<E extends Comparable<E>> {
     /**
      * 内部类 节点类
@@ -117,6 +121,7 @@ public class BST<E extends Comparable<E>> {
      * 前序遍历以node为根的二分搜索树 ，递归算法
      */
     private void preOrder(Node node) {
+        // 递归的终止条件是该节点为空
         if (node == null) {
             return;
         }
@@ -125,6 +130,89 @@ public class BST<E extends Comparable<E>> {
         preOrder(node.left);
         preOrder(node.right);
     }
+
+    /**
+     * 二分搜索树的非递归的写法
+     */
+    public void preOrderNR() {
+        // 需要stack 数据结构辅助 进行遍历
+        // 使用泛型
+        Stack<Node> stack = new Stack<>();
+        // 初始化的时候,将根节点放进去
+        stack.push(root);
+        // 只要栈不为空 就一直循环下去
+        while (!stack.isEmpty()) {
+            // 记录当前节点
+            Node cur = stack.pop();
+            // 打印当前节点
+            System.out.println(cur.e);
+            // 如果右节点不为空
+            if (cur.right != null) {
+                // 将右节点放入栈中
+                stack.push(cur.right);
+            }
+            if (cur.left != null) {
+                stack.push(cur.left);
+            }
+        }
+    }
+
+    /**
+     * 二分搜索树的层序遍历
+     */
+    public void levelOrder() {
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        while (!q.isEmpty()) {
+            Node cur = q.remove();
+            System.out.println(cur.e);
+
+            if (cur.left != null) {
+                q.add(cur.left);
+            }
+            if (cur.right != null) {
+                q.add(cur.right);
+            }
+        }
+    }
+
+    /**
+     * 找到最小值
+     * @return
+     */
+    public E minimun() {
+        if (size == 0) {
+            throw new IllegalArgumentException("BET is Empty");
+        }
+        return minimun(root).e;
+    }
+
+    private Node minimun(Node node) {
+        if (node.left == null) {
+            return node;
+        }
+        return minimun(node.left);
+    }
+
+    /**
+     * 删除最大值
+     * @return
+     */
+    public E maxmun() {
+        if (size == 0) {
+            throw new IllegalArgumentException("BET is Empty");
+        }
+        return maxmun(root).e;
+    }
+
+    private Node maxmun(Node node) {
+        if (node.right == null) {
+            return node;
+        }
+        return minimun(node.right);
+    }
+
+
 
     /**
      * 二分搜索树的中序遍历

@@ -8,22 +8,17 @@ public class Main {
         for (int num : nums) {
             bst.add(num);
         }
-
+//                5
+//              /   \
+//             3      6
+//           /  \      \
+//          2    4      8
         bst.preOrder();
-
         System.out.println();
-
         bst.inOrder();
-
         System.out.println();
-
         bst.postOrder();
-
-
-
-
-
-//        System.out.println();
-//        System.out.println(bst);
+        System.out.println();
+        System.out.println(bst);
     }
 }
